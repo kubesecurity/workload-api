@@ -1,0 +1,272 @@
+openapi: 3.0.2
+servers:
+  - url: /api/v1
+info:
+  description: "API for the integration of Openshift Telemetry Analytics workload analyis results with any consumer."
+  version: "1.0.0"
+  title: "Openshift Telemetry Workload Analysis API"
+tags:
+  - name: "Accounts"
+    description: "Get the accounts for which data is available."
+  - name: "Workloads"
+    description: "Get workload related details for each account."
+  - name: "Health check"
+    description: "The health checks(liveness and readiness) for this API."
+paths:
+  /:
+    get:
+      tags:
+        - "Health check"
+      summary: "Liveness probe for the service."
+      description: "A probe to check whether the service is up."
+      operationId: "server.liveness"
+      responses:
+        "200":
+          description: "service is live"
+  /readiness:
+    get:
+      tags:
+        - "Health check"
+      summary: "Check whether the service is ready to serve requests."
+      description: "A readiness probe to check whether the service is ready."
+      operationId: "server.readiness"
+      responses:
+        "200":
+          description: "service is ready"
+        "500":
+          description: "Service is down/internal exception."
+  /accounts:
+    get:
+      tags:
+        - "Accounts"
+      summary: "Returns a page-by-page list of accounts."
+      description: "Returns a list of accounts. Each account has a one-to-many mapping to Openshift clusters for which data is available with analytics."
+      operationId: "routes.accounts.getAccounts"
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+          examples:
+            first:
+              value: 0
+            second:
+              value: 1000
+            third:
+              value: 2000
+        - in: query
+          name: record_count
+          schema:
+            type: integer
+          description: The max number of record to fetch, starting from offset.
+          examples:
+            max_value:
+              value: 1000
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountsList"
+              examples:
+                accounts collection example:
+                  $ref: "#/components/examples/accountsResponseExample"
+        "401":
+          description: "Authorization error"
+      security:
+        - bearerAuth: []
+  /workloads:
+    post:
+      tags:
+        - "Workloads"
+      summary: "Returns the full JSON workload for all accounts specified in the query."
+      description: "Returns the output of the workload clustering of  Openshift clusters of a particular set of accounts (max per page: 50)."
+      operationId: "routes.cluster_workload_info.getWorkloadInfo"
+      requestBody:
+        description: |-
+          Create a new search/filter criteria and get back filtered data by account ID list.  
+          Accepts a list of accounts, offset and record_count as URL parameters. Max number of values accepted in the accounts key is 12.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkloadRequest"
+            examples:
+              First workload Request:
+                $ref: "#/components/examples/firstWorkloadRequest"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkloadResponse"
+              examples:
+                Example workload response object:
+                  $ref: "#/components/examples/workloadResponseExample"
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: server.decode_token
+  schemas:
+    AccountsList:
+      type: "object"
+      properties:
+        total_record_count:
+          type: "integer"
+          format: "int32"
+        accounts:
+          type: "array"
+          items:
+            type: integer
+    WorkloadRequest:
+      type: "object"
+      properties:
+        accounts:
+          type: array
+          items:
+            type: integer
+        record_count:
+          type: integer
+          description: "The total number records to fetch, max limit configured on our side is 50 clusters."
+        offset:
+          type: integer
+          description: "The offset from where the records are required (this API is paginated)."
+    WorkloadResponse:
+      type: "object"
+      properties:
+        total_record_count:
+          type: integer
+        cluster_details:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              account:
+                type: integer
+              clusters:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    cluster_id:
+                      type: "string"
+                    utilization:
+                      type: "object"
+                      properties:
+                        "90":
+                          type: "object"
+                          properties:
+                            cpu_capacity:
+                              type: number
+                              format: double
+                            cpu_utilization_percentage:
+                              type: number
+                              format: double
+                            memory_capacity:
+                              type: number
+                              format: double
+                            memory_utilization_percentage:
+                              type: number
+                              format: double
+                            category:
+                              type: string
+                        "180":
+                          type: "object"
+                          properties:
+                            cpu_capacity:
+                              type: number
+                              format: double
+                            cpu_utilization_percentage:
+                              type: number
+                              format: double
+                            memory_capacity:
+                              type: number
+                              format: double
+                            memory_utilization_percentage:
+                              type: number
+                              format: double
+                            category:
+                              type: string
+                        "270":
+                          type: "object"
+                          properties:
+                            cpu_capacity:
+                              type: number
+                              format: double
+                            cpu_utilization_percentage:
+                              type: number
+                              format: double
+                            memory_capacity:
+                              type: number
+                              format: double
+                            memory_utilization_percentage:
+                              type: number
+                              format: double
+                            category:
+                              type: string
+                    is_expiring_trial:
+                      type: boolean
+                    is_trial:
+                      type: boolean
+                    cluster_age:
+                      type: integer
+                    cluster_last_reported:
+                      type: string
+                      format: date
+                    last_updated:
+                      type: string
+                      format: date
+  examples:
+    firstWorkloadRequest:
+      value:
+        accounts:
+          - 467908
+          - 549068
+          - 645908
+          - 29876582
+        offset: 100
+        record_count: 50
+    accountsResponseExample:
+      value:
+        total_count: 5000
+        accounts: [467908, 549068, 645908, 29876582, 4069811, 4590678, 4690823]
+    workloadResponseExample:
+      value:
+        total_record_count: 240
+        cluster_details:
+          - account: 29876582
+            clusters:
+              - cluster_id: "931-0b-472-9386kjhghj-140a44d8581b"
+                utilization:
+                  "90":
+                    cpu_capacity: 150
+                    cpu_utilization_percentage: 10.5
+                    memory_capacity: 2030.62
+                    memory_utilization_percentage: 25.66
+                    category: "HH"
+                  "180":
+                    cpu_capacity: 175
+                    cpu_utilization_percentage: 20.97
+                    memory_capacity: 2276.75
+                    memory_utilization_percentage: 20.88
+                    category: "LL"
+                  "270":
+                    cpu_capacity: 150
+                    cpu_utilization_percentage: 10.5
+                    memory_capacity: 2030.62
+                    memory_utilization_percentage: 25.66
+                    category: "HH"
+                is_expiring_trial: true
+                is_trial: true
+                cluster_age: 150
+                cluster_last_reported: "2020-05-04"
+                last_updated: "2020-11-20"
