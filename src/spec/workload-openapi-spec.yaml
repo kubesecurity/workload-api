@@ -19,7 +19,7 @@ paths:
         - "Health check"
       summary: "Liveness probe for the service."
       description: "A probe to check whether the service is up."
-      operationId: "server.liveness"
+      operationId: "routes.health_check.liveness"
       responses:
         "200":
           description: "service is live"
@@ -29,7 +29,7 @@ paths:
         - "Health check"
       summary: "Check whether the service is ready to serve requests."
       description: "A readiness probe to check whether the service is ready."
-      operationId: "server.readiness"
+      operationId: "routes.health_check.readiness"
       responses:
         "200":
           description: "service is ready"
@@ -41,7 +41,7 @@ paths:
         - "Accounts"
       summary: "Returns a page-by-page list of accounts."
       description: "Returns a list of accounts. Each account has a one-to-many mapping to Openshift clusters for which data is available with analytics."
-      operationId: "routes.accounts.getAccounts"
+      operationId: "routes.accounts.get_accounts"
       parameters:
         - in: query
           name: offset
@@ -115,7 +115,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      x-bearerInfoFunc: server.decode_token
+      x-bearerInfoFunc: routes.auth.decode_token
   schemas:
     AccountsList:
       type: "object"

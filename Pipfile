@@ -11,6 +11,7 @@ gevent = "*"
 flask-marshmallow = "*"
 flask-sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
+python-jose = "*"
 
 [dev-packages]
 pytest = "*"

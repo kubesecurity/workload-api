@@ -11,8 +11,7 @@ _POSTGRES_CONFIG = {
     "USERNAME": os.environ.get("PG_USERNAME"),
 }
 
-app = connexion.App(__name__, specification_dir="routes/OpenAPI/", server="gevent")
-app.add_api("workload-openapi-spec.yaml")
+app = connexion.App(__name__, specification_dir="spec/", server="gevent")
 
 flask_app = app.app
 
@@ -24,3 +23,6 @@ flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(flask_app)
 ma = Marshmallow(flask_app)
+
+SECRET_TOKEN_GENERATION = os.environ.get("SECRET_TOKEN_GENERATION")  # Token to to generate new client API keys.
+SECRET_CLIENT_API_TOKEN = os.environ.get("SECRET_CLIENT_API_TOKEN")  # Client API keys.

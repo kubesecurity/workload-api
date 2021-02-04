@@ -4,12 +4,20 @@ from config import ma
 from models.account_model import AccountModel
 
 
-class AccountSchema(ma.SQLAlchemySchema):
+class _AccountSchema(ma.SQLAlchemySchema):
     """Define a schema for serialization of account info."""
 
     class Meta:
-        """Defines the metaclass for the serialization object."""
+        """Defines the SQLAlchemy model to use for the account object."""
 
         model = AccountModel
+        load_instance = True
 
-        # TODO: Define the fields for this schema.
+    account_id = ma.auto_field()
+
+
+class AccountsResponse(ma.Schema):
+    """The response schema contains multiple accounts objects along with the total count."""
+
+    total_count = ma.Integer()
+    accounts = ma.List(ma.Pluck(_AccountSchema, "account_id"))
