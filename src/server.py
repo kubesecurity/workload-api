@@ -4,7 +4,7 @@
 import src.config as config
 
 # Initialize the API via the spec.
-config.app.add_api("workload-openapi-spec.yaml")
+config.app.add_api("workload-api-spec.yaml")
 
 
 if __name__ == "__main__":
