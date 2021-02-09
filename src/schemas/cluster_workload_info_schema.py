@@ -3,8 +3,7 @@
 from src.config import ma
 from src.models.cluster_workload_info_model import ClusterWorkloadInfoModel
 
-# We need to define 3 different utlization schemas since key is different for all
-# owing to our denormalized table structure.
+
 class UtilizationInfoSchema(ma.SQLAlchemySchema):
     """Utlization information schema."""
 
@@ -88,11 +87,3 @@ class AccountWorkloadResponseSchema(ma.Schema):
 
     account = ma.Integer()
     clusters = ma.Nested(ClusterWorkloadInfoSchema, many=True)
-
-
-class AccountsWorkloadRequestSchema(ma.Schema):
-    """Request JSON to the workload endpoint."""
-
-    accounts = ma.List(ma.Integer())
-    offset = ma.Integer()
-    record_count = ma.Integer()

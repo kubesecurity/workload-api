@@ -3,6 +3,7 @@
 import uuid
 
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import func
 
 from src.config import db
 
@@ -47,3 +48,8 @@ class ClusterWorkloadInfoModel(db.Model):
     # audit info
     created_time = db.Column(db.DateTime)
     last_updated_time = db.Column(db.DateTime)
+
+    @classmethod
+    def get_total_count(cls, accounts):
+        """Get the total number of records of this object."""
+        return cls.query.filter(cls.account_id.in_(accounts)).count()
