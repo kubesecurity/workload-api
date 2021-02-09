@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Model for the account entity."""
 
-from config import db
+from src.config import db
 from sqlalchemy import func
 
 

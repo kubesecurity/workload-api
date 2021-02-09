@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
 """Contains the autorization handlers."""
 import time
 
 from jose import JWTError, jwt
 from werkzeug.exceptions import Unauthorized
-from config import SECRET_CLIENT_API_TOKEN
+from src.config import SECRET_CLIENT_API_TOKEN
 
 
 def decode_token(token):

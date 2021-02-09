@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 """Definitions for the routes of the accounts API."""
-from schemas.account_schema import AccountsResponse, _AccountSchema
-from models.account_model import AccountModel
+from src.schemas.account_schema import AccountsResponse, _AccountSchema
+from src.models.account_model import AccountModel
 
 
 def get_accounts(offset=0, record_count=1000):

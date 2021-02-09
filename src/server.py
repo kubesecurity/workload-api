@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """Aggregates all the Flask blueprints to initialize the API."""
-import config
+import src.config as config
 
 # Initialize the API via the spec.
 config.app.add_api("workload-openapi-spec.yaml")

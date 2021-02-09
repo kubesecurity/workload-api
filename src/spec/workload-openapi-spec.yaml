@@ -83,7 +83,7 @@ paths:
         - "Workloads"
       summary: "Returns the full JSON workload for all accounts specified in the query."
       description: "Returns the output of the workload clustering of  Openshift clusters of a particular set of accounts (max per page: 50)."
-      operationId: "routes.cluster_workload_info.getWorkloadInfo"
+      operationId: "routes.cluster_workload_info.get_workload_info"
       requestBody:
         description: |-
           Create a new search/filter criteria and get back filtered data by account ID list.  

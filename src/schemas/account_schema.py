@@ -1,7 +1,7 @@
 """Contains the schema to easily serialize the account entity."""
 
-from config import ma
-from models.account_model import AccountModel
+from src.config import ma
+from src.models.account_model import AccountModel
 
 
 class _AccountSchema(ma.SQLAlchemySchema):

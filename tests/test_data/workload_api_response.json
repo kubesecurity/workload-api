@@ -1,0 +1,41 @@
+{
+  "cluster_details": [
+    {
+      "account": 29876582,
+      "clusters": [
+        {
+          "cluster_age": 150,
+          "cluster_id": "931-0b-472-9386kjhghj-140a44d8581b",
+          "cluster_last_reported": "2020-05-04",
+          "is_expiring_trial": true,
+          "is_trial": true,
+          "last_updated": "2020-11-20",
+          "utilization": {
+            "90": {
+              "category": "HH",
+              "cpu_capacity": 150,
+              "cpu_utilization_percentage": 10.5,
+              "memory_capacity": 2030.62,
+              "memory_utilization_percentage": 25.66
+            },
+            "180": {
+              "category": "LL",
+              "cpu_capacity": 175,
+              "cpu_utilization_percentage": 20.97,
+              "memory_capacity": 2276.75,
+              "memory_utilization_percentage": 20.88
+            },
+            "270": {
+              "category": "HH",
+              "cpu_capacity": 150,
+              "cpu_utilization_percentage": 10.5,
+              "memory_capacity": 2030.62,
+              "memory_utilization_percentage": 25.66
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "total_record_count": 240
+}
