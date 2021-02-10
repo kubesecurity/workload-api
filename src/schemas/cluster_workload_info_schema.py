@@ -2,6 +2,7 @@
 """Contains the marshmallow schema for cluster info entity to facilitate quick serialization."""
 from src.config import ma
 from src.models.cluster_workload_info_model import ClusterWorkloadInfoModel
+import marshmallow
 
 
 class UtilizationInfoSchema(ma.SQLAlchemySchema):
@@ -87,3 +88,11 @@ class AccountWorkloadResponseSchema(ma.Schema):
 
     account = ma.Integer()
     clusters = ma.Nested(ClusterWorkloadInfoSchema, many=True)
+
+
+class AccountsWorkloadRequestSchema(ma.Schema):
+    """Request JSON to the workload endpoint."""
+
+    accounts = ma.List(ma.Integer())
+    offset = ma.Integer()
+    record_count = ma.Integer(validate=marshmallow.validate.Range(min=0, max=1000))

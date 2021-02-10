@@ -106,6 +106,8 @@ paths:
               examples:
                 Example workload response object:
                   $ref: "#/components/examples/workloadResponseExample"
+        "400":
+          description: "Bad Request, check if limits are adhered to and whether key names are proper."
       security:
         - bearerAuth: []
 

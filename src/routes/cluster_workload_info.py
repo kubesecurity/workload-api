@@ -2,12 +2,23 @@
 """Contains the handlers and business logic for the workload API."""
 from collections import defaultdict
 
-from src.schemas.cluster_workload_info_schema import ClusterWorkloadInfoSchema, AccountWorkloadResponseSchema
+import marshmallow
+from connexion.lifecycle import ConnexionResponse
+
+from src.schemas.cluster_workload_info_schema import (
+    ClusterWorkloadInfoSchema,
+    AccountWorkloadResponseSchema,
+    AccountsWorkloadRequestSchema,
+)
 from src.models.cluster_workload_info_model import ClusterWorkloadInfoModel
 
 
 def get_workload_info(body):
     """Another stub to ensure connexion does not error out."""
+    try:
+        body = AccountsWorkloadRequestSchema().load(body)
+    except marshmallow.exceptions.ValidationError:
+        return ConnexionResponse(status_code=400)
     workload_data = (
         ClusterWorkloadInfoModel.query.filter(ClusterWorkloadInfoModel.account_id.in_(body.get("accounts", [])))
         .order_by(ClusterWorkloadInfoModel.account_id)

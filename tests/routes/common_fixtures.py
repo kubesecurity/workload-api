@@ -20,5 +20,5 @@ def auth_header(monkeypatch) -> Dict:
     monkeypatch.setenv("SECRET_CLIENT_API_TOKEN", "test")
     jwt = generate_token(0)
     return {
-        "Authorization": "Bearer " + str(jwt),
+        "Authorization": "Bearer " + str(jwt["client_api_token"]),
     }
