@@ -32,6 +32,8 @@ def get_workload_info(body):
     response_data = []
     for cluster_details in workload_data:
         account_details[cluster_details.account_id].append(cluster_details)
+
+    # List comprehension, not the cluster_details is not same as above.
     response_data = [
         AccountWorkloadResponseSchema().dump({"account": account_id, "clusters": cluster_details})
         for account_id, cluster_details in account_details.items()

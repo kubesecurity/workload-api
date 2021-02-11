@@ -1,6 +1,7 @@
 """Test the cluster workload schema."""
 import json
-from typing import Dict
+from typing import Dict, List
+from collections import defaultdict
 
 from pytest import fixture
 from pytest import MonkeyPatch
@@ -11,6 +12,8 @@ from src.schemas.cluster_workload_info_schema import ClusterWorkloadInfoSchema, 
 from src.models.cluster_workload_info_model import ClusterWorkloadInfoModel
 from src.config import db
 
+from tests.common_fixtures import workload_data_objects
+
 
 @fixture
 def request_schema() -> AccountsWorkloadRequestSchema:
@@ -20,6 +23,7 @@ def request_schema() -> AccountsWorkloadRequestSchema:
 
 @fixture
 def request_workload() -> Dict:
+    """Sample request to the workload request endpoint."""
     with open("./tests/test_data/workload_api_request.json") as f:
         request = json.load(f)
     return request
@@ -42,7 +46,7 @@ def test_bad_request_raises_validation_error(request_workload: Dict, request_sch
 @fixture
 def cluster_workload_schema() -> ClusterWorkloadInfoSchema:
     """Fixture to give us a schema instance."""
-    return ClusterWorkloadInfoSchema()
+    return ClusterWorkloadInfoSchema(many=True)
 
 
 def test_workload_info_schema_create(cluster_workload_schema: ClusterWorkloadInfoSchema):
@@ -50,13 +54,14 @@ def test_workload_info_schema_create(cluster_workload_schema: ClusterWorkloadInf
     assert cluster_workload_schema
 
 
-def test_cluster_workload_info_schema_works(cluster_workload_schema: ClusterWorkloadInfoSchema, monkeypatch):
+def test_cluster_workload_info_schema_works(
+    cluster_workload_schema: ClusterWorkloadInfoSchema, workload_data_objects: List[ClusterWorkloadInfoModel]
+):
     """Test if this schema works."""
-    # monkeypatch.setattr(
-    #     ClusterWorkloadInfoModel.query.filter.order_by.all,
-    # )
-    data = (
-        ClusterWorkloadInfoModel.query.filter(ClusterWorkloadInfoModel.account_id.in_([2876, 2706, 6286, 3000]))
-        .order_by(ClusterWorkloadInfoModel.account_id)
-        .all()
-    )
+    account_details = defaultdict(list)
+    response_data = []
+    for cluster_details in workload_data_objects:
+        account_details[cluster_details.account_id].append(cluster_details)
+    for cluster_detail_list in account_details.values():
+        serialized = cluster_workload_schema.dump(cluster_detail_list)
+        assert serialized

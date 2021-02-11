@@ -18,6 +18,8 @@ pytest = "*"
 pytest-flask = "*"
 pydocstyle = "*"
 pycodestyle = "*"
+pytest-mock = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.8"
