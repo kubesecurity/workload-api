@@ -17,24 +17,24 @@ class ClusterWorkloadInfoModel(db.Model):
     account_id = db.Column(db.Integer(), db.ForeignKey("account.account_id"))
 
     # 90 day usage.
-    cpu_capacity_90 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    cpu_utilization_percentage_90 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    memory_capacity_90 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    memory_utilization_percentage_90 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
+    cpu_capacity_90 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    cpu_utilization_percentage_90 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    memory_capacity_90 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    memory_utilization_percentage_90 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
     category_90 = db.Column(db.String(10))
 
     # 180 day usage.
-    cpu_capacity_180 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    cpu_utilization_percentage_180 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    memory_capacity_180 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    memory_utilization_percentage_180 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
+    cpu_capacity_180 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    cpu_utilization_percentage_180 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    memory_capacity_180 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    memory_utilization_percentage_180 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
     category_180 = db.Column(db.String(10))
 
     # 270 day usage.
-    cpu_capacity_270 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    cpu_utilization_percentage_270 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    memory_capacity_270 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
-    memory_utilization_percentage_270 = db.Column(db.Float(as_decimal=True, decimal_return_scale=2))
+    cpu_capacity_270 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    cpu_utilization_percentage_270 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    memory_capacity_270 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
+    memory_utilization_percentage_270 = db.Column(db.Float(asdecimal=True, decimal_return_scale=2))
     category_270 = db.Column(db.String(10))
 
     # subscription info

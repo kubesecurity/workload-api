@@ -11,6 +11,10 @@ import src.config
 import src.routes.auth
 
 
+# This needs to be outside otherwise fixture reports error.
+app.add_api("workload-api-spec.yaml")
+
+
 @pytest.fixture
 def workload_data_objects():
     """Create a collection of records that serve as the db query repsonse object."""
@@ -31,7 +35,6 @@ def workload_data_objects():
 @pytest.fixture
 def app_client():
     """Return a test client to test routes."""
-    app.add_api("workload-api-spec.yaml")
     return app.app.test_client()
 
 

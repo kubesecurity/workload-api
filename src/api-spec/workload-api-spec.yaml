@@ -33,8 +33,8 @@ paths:
       responses:
         "200":
           description: "service is ready"
-        "500":
-          description: "Service is down/internal exception."
+        "502":
+          description: "Could not establish a connection to upstream dependencies."
   /accounts:
     get:
       tags:
@@ -73,6 +73,8 @@ paths:
               examples:
                 accounts collection example:
                   $ref: "#/components/examples/accountsResponseExample"
+        "400":
+          description: "Bad request"
         "401":
           description: "Authorization error"
       security:
@@ -108,6 +110,8 @@ paths:
                   $ref: "#/components/examples/workloadResponseExample"
         "400":
           description: "Bad Request, check if limits are adhered to and whether key names are proper."
+        "401":
+          description: "Authorization error"
       security:
         - bearerAuth: []
 
