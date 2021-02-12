@@ -21,7 +21,7 @@ def get_workload_info(body):
         return ConnexionResponse(status_code=400)
     workload_data = (
         ClusterWorkloadInfoModel.query.filter(ClusterWorkloadInfoModel.account_id.in_(body.get("accounts", [])))
-        .order_by(ClusterWorkloadInfoModel.account_id)
+        .order_by(ClusterWorkloadInfoModel.account_id, ClusterWorkloadInfoModel.cluster_id)
         .offset(body.get("offset", 0))
         .limit(body.get("record_count", 50))
         .all()
