@@ -28,7 +28,7 @@ def workload_data_objects():
         return records
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def app_client():
     """Return a test client to test routes."""
     app.add_api("workload-api-spec.yaml")
