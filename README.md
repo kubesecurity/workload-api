@@ -32,6 +32,18 @@ $ cd src/routes
 $ python api.py
 ```
 
+To run the unit test suite,
+
+```bash
+$ PYTHONPATH=`pwd` pytest . --cov=./src/
+```
+
+Run the linting checks:
+```
+$ pycodestyle .
+$ pydocstyle .
+```
+
 ## Databse connection
 
 The databse connection is managed by `flask-sqlalchemy`, you need to setup the environment variables (either through Openshift Secrets/template/configmaps) or otherwise to set the proper values in the the `_POSTGRES_CONFIG` in the [config](/src/config.py). The env-vars are:
