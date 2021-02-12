@@ -22,7 +22,6 @@ def decode_generation_token(token):
     return decode_token(token, config.SECRET_TOKEN_GENERATION)
 
 
-# TODO: Define a route for token generation API.
 def generate_token(user_id):
     """Generate a new client API token."""
     timestamp = int(time.time())

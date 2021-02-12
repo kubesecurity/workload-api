@@ -93,6 +93,6 @@ class AccountWorkloadResponseSchema(ma.Schema):
 class AccountsWorkloadRequestSchema(ma.Schema):
     """Request JSON to the workload endpoint."""
 
-    accounts = ma.List(ma.Integer())
+    accounts = ma.List(ma.Integer(), validate=marshmallow.validate.Length(1, 12))
     offset = ma.Integer()
-    record_count = ma.Integer(validate=marshmallow.validate.Range(min=0, max=1000))
+    record_count = ma.Integer(validate=marshmallow.validate.Range(min=0, max=50))
