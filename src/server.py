@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 """Aggregates all the Flask blueprints to initialize the API."""
-import src.config as config
+from src.config import app
+from flask_cors import CORS
 
 # Initialize the API via the spec.
-config.app.add_api("workload-api-spec.yaml")
-config.app.add_api("tokengen-api-spec.yaml")
+app.add_api("workload-api-spec.yaml")
+app.add_api("tokengen-api-spec.yaml")
+CORS(app.app)
 
 if __name__ == "__main__":
     """Initialize a development server."""
-    config.app.run(port=8080, debug=True)
+    app.run(port=8080, debug=True)

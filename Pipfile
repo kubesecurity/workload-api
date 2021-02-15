@@ -12,6 +12,8 @@ flask-marshmallow = "*"
 flask-sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
 python-jose = "*"
+gunicorn = "*"
+flask-cors = "*"
 
 [dev-packages]
 pytest = "*"
