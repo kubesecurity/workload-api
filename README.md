@@ -53,6 +53,55 @@ The databse connection is managed by `flask-sqlalchemy`, you need to setup the e
  - PG_PASSWORD
  - PG_USERNAME
 
+
+## Setting up the service on Openshift
+
+The code first needs to be pacakged into a container using the [Dockerfile](/Dockerfile) available in this repository and you need to update the corresponding properties:
+
+- IMAGE_TAG
+- DOCKER_IMAGE
+- DOCKER_REGISTRY
+
+fields in the [openshift template](./openshift/template.yaml) that is present in the repository.
+
+This repository requires one configmap and one secret to work with:
+
+### configmap
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telanlyt-config
+data:
+  pg_host: # value goes here
+  pg_username: # value goes here
+  pg_database_workload_api: # value goes here 
+```
+
+### secret
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: telanlyt-secrets
+type: Opaque
+data:
+  pg_password: # base64 encoded value goes here.
+  secret_token_generation: # base64 encoded value goes here.
+  secret_client_api_token: # base64 encoded value goes here.
+```
+
+After applying the secret and the configmap in the desired namespace, the template can be used to create resources in the namespace as with:
+
+```bash
+$ oc login ${YOUR_CLUSTER_URL}
+$ oc project ${YOUR_NAMESPACE}
+$ oc process -f openshift/template.yaml | oc create -f -
+```
+
+The template contains a `route` definition, a `service` definition and a `deploymentConfig`, the corresponding route that is generated can be retrieved with the output of `oc get routes`.
 ## License
 Copyright 2021 Red Hat Inc.
 
