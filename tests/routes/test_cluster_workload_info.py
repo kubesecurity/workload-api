@@ -36,3 +36,4 @@ def test_workload_info_response(app_client, auth_header, workload_data_objects, 
     request = {"accounts": [2876, 2706, 6286, 3000] * 5, "offset": 0, "record_count": 51}
     response = app_client.post("/api/v1/workloads", json=request, headers=auth_header)
     assert response.status_code == 400
+    assert response.get_json() == "Invalid values supplied in JSON body, please review API limits"

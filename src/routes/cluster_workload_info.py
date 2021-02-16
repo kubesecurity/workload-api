@@ -18,7 +18,7 @@ def get_workload_info(body):
     try:
         body = AccountsWorkloadRequestSchema().load(body)
     except marshmallow.exceptions.ValidationError:
-        return ConnexionResponse(status_code=400)
+        return "Invalid values supplied in JSON body, please review API limits", 400
     workload_data = (
         ClusterWorkloadInfoModel.query.filter(ClusterWorkloadInfoModel.account_id.in_(body.get("accounts", [])))
         .order_by(ClusterWorkloadInfoModel.account_id, ClusterWorkloadInfoModel.cluster_id)

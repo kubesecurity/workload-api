@@ -21,5 +21,6 @@ def test_get_accounts(app_client, monkeypatch, auth_header, mocker, account_obje
     # Now test if the validations work.
     response = app_client.get("/api/v1/accounts", headers=auth_header, query_string={"record_count": 2000, "offset": 0})
     assert response.status_code == 400
+    assert response.get_json() == "Invalid value specified for record count or offset"
     response = app_client.get("/api/v1/accounts", headers=auth_header, query_string={"offset": -1, "record_count": 20})
     assert response.status_code == 400
