@@ -1,0 +1,46 @@
+openapi: 3.0.2
+servers:
+  - url: /api/auth/
+info:
+  description: "A private API to generate client API tokens. Any request to this endpoint uses a token generation key that only the team has access to."
+  version: "1.0.0"
+  title: "Client token generation API"
+tags:
+  - name: "Generate Token"
+    description: "Generate client API tokens."
+paths:
+  /getnewtoken:
+    get:
+      tags:
+        - "Generate Token"
+      summary: "Generate a new API token for a user."
+      operationId: "src.routes.auth.generate_token"
+      parameters:
+        - in: query
+          name: user_id
+          schema:
+            type: string
+            description: "This will always be treated as a string, whether it is an integer or not."
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                properties:
+                  user_id:
+                    type: string
+                  client_api_token:
+                    type: string
+        "401":
+          description: "Bad/no generation token provided."
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: src.routes.auth.decode_generation_token

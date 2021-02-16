@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+connexion = {extras = ["swagger-ui"], version = "*"}
+psycopg2 = "*"
+gevent = "*"
+flask-marshmallow = "*"
+flask-sqlalchemy = "*"
+marshmallow-sqlalchemy = "*"
+python-jose = "*"
+gunicorn = "*"
+flask-cors = "*"
+
+[dev-packages]
+pytest = "*"
+pytest-flask = "*"
+pydocstyle = "*"
+pycodestyle = "*"
+pytest-mock = "*"
+pytest-cov = "*"
+
+[requires]
+python_version = "3.8"
