@@ -165,7 +165,7 @@ parameters:
     displayName: Number of deployment replicas
     required: true
     name: REPLICAS
-    value: "1"
+    value: "3"
 
   - description: Port Number
     displayName: Port Number
@@ -176,7 +176,7 @@ parameters:
   - description: The application gateway timeout for the apiserver for each request
     displayName: API Server Timeout
     name: API_SERVER_TIMEOUT
-    value: "900"
+    value: "90"
 
   - description: Number of gunicorn worker processes
     displayName: Number of worker processes
