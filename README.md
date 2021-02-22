@@ -44,9 +44,9 @@ $ pycodestyle .
 $ pydocstyle .
 ```
 
-## Databse connection
+## Database connection
 
-The databse connection is managed by `flask-sqlalchemy`, you need to setup the environment variables (either through Openshift Secrets/template/configmaps) or otherwise to set the proper values in the the `_POSTGRES_CONFIG` in the [config](/src/config.py). The env-vars are:
+The database connection is managed by `flask-sqlalchemy`, you need to setup the environment variables (either through Openshift Secrets/template/configmaps) or otherwise to set the proper values in the the `_POSTGRES_CONFIG` in the [config](/src/config.py). The env-vars are:
 
  - PG_HOST
  - PG_DATABASE
