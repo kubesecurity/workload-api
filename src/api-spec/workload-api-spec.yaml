@@ -239,7 +239,7 @@ components:
           - 549068
           - 645908
           - 29876582
-        offset: 100
+        offset: 0
         record_count: 50
     accountsResponseExample:
       value:
