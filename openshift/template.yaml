@@ -64,6 +64,8 @@ objects:
                   value: ${NUMBER_WORKER_PROCESS}
                 - name: WORKER_TYPE
                   value: ${WORKER_TYPE}
+                - name: WORKER_CONNECTION_POOL_LIMIT
+                  value: ${WORKER_CONNECTION_POOL_LIMIT}
 
               image: "${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${IMAGE_TAG}"
               name: telanlyt-api
@@ -188,4 +190,10 @@ parameters:
     displayName: Worker type
     required: true
     name: WORKER_TYPE
-    value: "sync"
+    value: "gevent"
+
+  - description: Connection pool size
+    displayName: Worker Pool Size
+    required: true
+    name: WORKER_CONNECTION_POOL_LIMIT
+    value: "1024"

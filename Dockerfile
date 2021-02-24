@@ -18,6 +18,7 @@ COPY ./src/ .
 COPY ./Pipfile Pipfile
 COPY ./Pipfile.lock Pipfile.lock
 COPY ./entrypoint.sh entrypoint.sh
+COPY ./gunicorn.conf.py gunicorn.conf.py
 
 # Set the Pythonpath to the sources root.
 ENV PYTHONPATH="/opt/app-root/"\
