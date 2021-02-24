@@ -56,14 +56,13 @@ objects:
                 failureThreshold: 3
                 successThreshold: 1
               readinessProbe:
-                # TODO: Set this to the real readiness check once
-                # DB connection kinks are worked out.
-                tcpSocket:
+                httpGet:
+                  path: /api/v1/readiness
                   port: ${{API_SERVER_PORT}}
                 failureThreshold: 3
                 successThreshold: 1
-                initialDelaySeconds: 20
-                periodSeconds: 60
+                initialDelaySeconds: 60
+                periodSeconds: 60 # check whether DB is live once every minute.
                 timeoutSeconds: 30
               resources:
                 requests:
@@ -167,7 +166,7 @@ parameters:
     name: WORKER_TYPE
     value: "gevent"
 
-  - description: Connection pool size
+  - description: Connection pool size for each gevent worker
     displayName: Worker Pool Size
     required: true
     name: WORKER_CONNECTION_POOL_LIMIT
