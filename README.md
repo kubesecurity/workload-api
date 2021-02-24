@@ -44,15 +44,64 @@ $ pycodestyle .
 $ pydocstyle .
 ```
 
-## Databse connection
+## Database connection
 
-The databse connection is managed by `flask-sqlalchemy`, you need to setup the environment variables (either through Openshift Secrets/template/configmaps) or otherwise to set the proper values in the the `_POSTGRES_CONFIG` in the [config](/src/config.py). The env-vars are:
+The database connection is managed by `flask-sqlalchemy`, you need to setup the environment variables (either through Openshift Secrets/template/configmaps) or otherwise to set the proper values in the the `_POSTGRES_CONFIG` in the [config](/src/config.py). The env-vars are:
 
  - PG_HOST
  - PG_DATABASE
  - PG_PASSWORD
  - PG_USERNAME
 
+
+## Setting up the service on Openshift
+
+The code first needs to be pacakged into a container using the [Dockerfile](/Dockerfile) available in this repository and you need to update the corresponding properties:
+
+- IMAGE_TAG
+- DOCKER_IMAGE
+- DOCKER_REGISTRY
+
+fields in the [openshift template](./openshift/template.yaml) that is present in the repository.
+
+This repository requires one configmap and one secret to work with:
+
+### configmap
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telanlyt-config
+data:
+  PG_HOST: # value goes here.
+  PG_USERNAME: # value goes here.
+  PG_DATABASE: # value goes here.
+```
+
+### secret
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: telanlyt-secrets
+type: Opaque
+data:
+  PG_PASSWORD: # base64 encoded value goes here.
+  SECRET_TOKEN_GENERATION: # base64 encoded value goes here.
+  SECRET_CLIENT_API_TOKEN: # base64 encoded value goes here.
+```
+
+After applying the secret and the configmap in the desired namespace, the template can be used to create resources in the namespace as with:
+
+```bash
+$ oc login ${YOUR_CLUSTER_URL}
+$ oc project ${YOUR_NAMESPACE}
+$ oc process -f openshift/template.yaml | oc create -f -
+```
+
+The template contains a `route` definition, a `service` definition and a `deploymentConfig`, the corresponding route that is generated can be retrieved with the output of `oc get routes`.
 ## License
 Copyright 2021 Red Hat Inc.
 

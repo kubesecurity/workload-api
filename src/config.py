@@ -11,7 +11,7 @@ _POSTGRES_CONFIG = {
     "USERNAME": os.environ.get("PG_USERNAME"),
 }
 
-app = connexion.App(__name__, specification_dir="api-spec/", server="gevent")
+app = connexion.App(__name__, specification_dir="api-spec/")
 
 flask_app = app.app
 
