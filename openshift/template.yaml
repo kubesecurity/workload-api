@@ -25,37 +25,12 @@ objects:
           containers:
             - command:
                 - ./entrypoint.sh
+              envFrom:
+                - configMapRef:
+                    name: telanlyt-config
+                - secretRef:
+                    name: telanlyt-secrets
               env:
-                - name: PG_HOST
-                  valueFrom:
-                    configMapKeyRef:
-                      name: telanlyt-config
-                      key: pg_host
-                - name: PG_USERNAME
-                  valueFrom:
-                    configMapKeyRef:
-                      name: telanlyt-config
-                      key: pg_username
-                - name: PG_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: telanlyt-secrets
-                      key: pg_password
-                - name: PG_DATABASE
-                  valueFrom:
-                    configMapKeyRef:
-                      name: telanlyt-config
-                      key: pg_database_workload_api
-                - name: SECRET_CLIENT_API_TOKEN
-                  valueFrom:
-                    secretKeyRef:
-                      name: telanlyt-secrets
-                      key: secret_client_api_token
-                - name: SECRET_TOKEN_GENERATION
-                  valueFrom:
-                    secretKeyRef:
-                      name: telanlyt-secrets
-                      key: secret_token_generation
                 - name: API_SERVER_PORT
                   value: ${API_SERVER_PORT}
                 - name: API_SERVER_TIMEOUT

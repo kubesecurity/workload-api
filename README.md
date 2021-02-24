@@ -74,9 +74,9 @@ kind: ConfigMap
 metadata:
   name: telanlyt-config
 data:
-  pg_host: # value goes here
-  pg_username: # value goes here
-  pg_database_workload_api: # value goes here 
+  PG_HOST: # value goes here.
+  PG_USERNAME: # value goes here.
+  PG_DATABASE: # value goes here.
 ```
 
 ### secret
@@ -88,9 +88,9 @@ metadata:
   name: telanlyt-secrets
 type: Opaque
 data:
-  pg_password: # base64 encoded value goes here.
-  secret_token_generation: # base64 encoded value goes here.
-  secret_client_api_token: # base64 encoded value goes here.
+  PG_PASSWORD: # base64 encoded value goes here.
+  SECRET_TOKEN_GENERATION: # base64 encoded value goes here.
+  SECRET_CLIENT_API_TOKEN: # base64 encoded value goes here.
 ```
 
 After applying the secret and the configmap in the desired namespace, the template can be used to create resources in the namespace as with:
