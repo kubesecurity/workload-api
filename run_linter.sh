@@ -6,5 +6,5 @@ then
    python3 "$(which pip)"  install pipenv
 fi
 
-pipenv install
+pipenv install --dev
 pipenv run pylint src tests
