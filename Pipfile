@@ -22,6 +22,7 @@ pydocstyle = "*"
 pycodestyle = "*"
 pytest-mock = "*"
 pytest-cov = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.8"
