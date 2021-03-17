@@ -1,0 +1,17 @@
+name: CI
+
+on:
+   pull_request:
+    branches: [ main ]
+   
+jobs:
+  Code-Quality-Checks:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Run linter
+      run: bash run_linter.sh
